@@ -746,6 +746,16 @@ collectd_LDADD += "-dlopen" uuid.la
 collectd_DEPENDENCIES += uuid.la
 endif
 
+if BUILD_PLUGIN_VARNISH
+pkglib_LTLIBRARIES += varnish.la
+varnish_la_SOURCES = varnish.c
+varnish_la_LDFLAGS = -module -avoid-version
+varnish_la_CFLAGS = $(AM_CFLAGS) $(BUILD_WITH_LIBVARNISH_CFLAGS)
+varnish_la_LIBADD = $(BUILD_WITH_LIBVARNISH_LIBS)
+collectd_LDADD += "-dlopen" varnish.la
+collectd_DEPENDENCIES += varnish.la
+endif
+
 if BUILD_PLUGIN_VMEM
 pkglib_LTLIBRARIES += vmem.la
 vmem_la_SOURCES = vmem.c

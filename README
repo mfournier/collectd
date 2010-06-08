@@ -410,6 +410,9 @@ Prerequisites
 
   * libxmms (optional)
 
+  * libvarnish (optional)
+     Fetches statistics from a Varnish instance. This is needed for the Varnish plugin
+     <http://varnish-cache.org>
 
 Configuring / Compiling / Installing
 ------------------------------------

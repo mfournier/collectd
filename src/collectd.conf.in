@@ -81,6 +81,7 @@ FQDNLookup   true
 @BUILD_PLUGIN_UNIXSOCK_TRUE@LoadPlugin unixsock
 @BUILD_PLUGIN_USERS_TRUE@LoadPlugin users
 @BUILD_PLUGIN_UUID_TRUE@LoadPlugin uuid
+@BUILD_PLUGIN_VARNISH_TRUE@LoadPlugin varnish
 @BUILD_PLUGIN_VMEM_TRUE@LoadPlugin vmem
 @BUILD_PLUGIN_VSERVER_TRUE@LoadPlugin vserver
 @BUILD_PLUGIN_WIRELESS_TRUE@LoadPlugin wireless
@@ -417,6 +418,86 @@ FQDNLookup   true
 
 #<Plugin uuid>
 #	UUIDFile "/etc/uuid"
+#</Plugin>
+
+#<Plugin varnish>
+#  Will monitor :
+#  - cache hits
+#  - cache misses
+#  - cache hits for pass
+#  MonitorCache yes
+#
+#  Will monitor :
+#  - client connections accepted
+#  - connection dropped
+#  - client requests received
+#  MonitorConnections yes
+#
+#  Will monitor:
+#  - Objects ESI parsed
+#  - ESI parse errors
+#  MonitorESI yes
+#
+#  Will monitor:
+#  - backend connection : success
+#  - backend connection : not attempted
+#  - backend connection : too many
+#  - backend connection : failures
+#  - backend connection : reuses
+#  - backend connection : was closed
+#  - backend connection : recycles
+#  - backend connection : unused
+#  MonitorBackend yes
+#
+#  Will monitor:
+#  - fetch head
+#  - fetch with Length
+#  - fetch chunked
+#  - fetch EOF
+#  - fetch had bad headers
+#  - fetch wanted close
+#  - fetch pre HTTP/1.1 closed
+#  - fetch zero length
+#  - fetch failed
+#  MonitorFetch yes
+#
+#  Will monitor:
+#  - HCB lookups without lock
+#  - HCB lookups with lock
+#  - HCB inserts
+#  MonitorHCB yes
+#
+#  Will monitor:
+#  - SHM records
+#  - SHM writes
+#  - SHM flushes due to overflow
+#  - SHM MTX contention
+#  - SHM cycles through buffer
+#  MonitorSHM yes
+#
+#  Will monitor:
+#  - SMA allocator requests
+#  - SMA outstanding allocations
+#  - SMA outstanding bytes
+#  - SMA bytes allocated
+#  - SMA bytes free
+#  MonitorSMA yes
+#
+#  Will monitor:
+#  - SMS allocator requests
+#  - SMS outstanding allocations
+#  - SMS outstanding bytes
+#  - SMS bytes allocated
+#  - SMS bytes freed
+#  MonitorSMS yes
+#
+#  Will monitor:
+#  - allocator requests
+#  - outstanding allocations
+#  - bytes allocated
+#  - bytes free
+#  MonitorSM yes
+#
 #</Plugin>
 
 #<Plugin vmem>
