@@ -1,3 +1,12 @@
+collectd (4.10.1-2.1~1.gbp1543f3) squeeze; urgency=low
+
+  ** SNAPSHOT build @1543f371a889f275b34cc323d441042f89cd0c73 **
+
+  * Non-maintainer upload.
+  * backported varnish plugin to  4.10.1.
+
+ -- Marc Fournier <marc.fournier@camptocamp.com>  Fri, 21 Jan 2011 15:35:00 +0100
+
 collectd (4.10.1-2) unstable; urgency=medium
 
   * debian/rules:
