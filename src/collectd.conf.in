@@ -929,20 +929,20 @@
 #   If you prefer defining another instance you can do
 #   so by using <Instance "myinstance">
 #   <Instance>
-#      CollectCache true
 #      CollectBackend true
+#      CollectCache true
 #      CollectConnections true
 #      CollectDirectorDNS false
-#      CollectSHM true
 #      CollectESI false
 #      CollectFetch false
 #      CollectHCB false
 #      CollectObjects false
 #      CollectPurge false
 #      CollectSession false
+#      CollectSHM true
+#      CollectSM false
 #      CollectSMA false
 #      CollectSMS false
-#      CollectSM false
 #      CollectStruct false
 #      CollectTotals false
 #      CollectUptime false
