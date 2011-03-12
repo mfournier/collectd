@@ -453,6 +453,7 @@ static int varnish_config_apply_default (user_config_t *conf) /* {{{ */
 	conf->collect_totals      = 0;
 	conf->collect_uptime      = 0;
 	conf->collect_vcl         = 0;
+	conf->collect_workers     = 0;
 	
 	return (0);
 } /* }}} int varnish_config_apply_default */
