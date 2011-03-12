@@ -6,6 +6,7 @@ apache_requests		value:DERIVE:0:U
 apache_scoreboard	value:GAUGE:0:65535
 ath_nodes		value:GAUGE:0:65535
 ath_stat		value:DERIVE:0:U
+backends			value:GAUGE:0:65535
 bitrate			value:GAUGE:0:4294967295
 bytes			value:GAUGE:0:U
 cache_operation		value:DERIVE:0:U
@@ -103,6 +104,7 @@ node_octets		rx:DERIVE:0:U, tx:DERIVE:0:U
 node_rssi		value:GAUGE:0:255
 node_stat		value:DERIVE:0:U
 node_tx_rate		value:GAUGE:0:127
+objects		value:DERIVE:0:U
 operations		value:DERIVE:0:U
 percent			value:GAUGE:0:100.1
 pg_blks			value:DERIVE:0:U
@@ -129,6 +131,7 @@ ps_rss			value:GAUGE:0:9223372036854775807
 ps_stacksize		value:GAUGE:0:9223372036854775807
 ps_state		value:GAUGE:0:65535
 ps_vm			value:GAUGE:0:9223372036854775807
+purge_operation		value:DERIVE:0:U
 queue_length		value:GAUGE:0:U
 records			value:GAUGE:0:U
 requests		value:GAUGE:0:U
@@ -137,12 +140,14 @@ route_etx		value:GAUGE:0:U
 route_metric		value:GAUGE:0:U
 routes			value:GAUGE:0:U
 serial_octets		rx:DERIVE:0:U, tx:DERIVE:0:U
+session_operation		value:DERIVE:0:U
 signal_noise		value:GAUGE:U:0
 signal_power		value:GAUGE:U:0
 signal_quality		value:GAUGE:0:U
 snr			value:GAUGE:0:U
 spam_check		value:GAUGE:0:U
 spam_score		value:GAUGE:U:U
+struct			value:DERIVE:0:U
 swap_io			value:DERIVE:0:U
 swap			value:GAUGE:0:1099511627776
 tcp_connections		value:GAUGE:0:4294967295
@@ -161,6 +166,7 @@ total_time_in_ms	value:DERIVE:0:U
 total_values		value:DERIVE:0:U
 uptime			value:GAUGE:0:4294967295
 users			value:GAUGE:0:65535
+vcl			value:GAUGE:0:65535
 vcpu			value:GAUGE:0:U
 virt_cpu_total		value:DERIVE:0:U
 virt_vcpu		value:DERIVE:0:U

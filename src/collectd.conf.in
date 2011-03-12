@@ -932,14 +932,21 @@
 #      CollectCache true
 #      CollectBackend true
 #      CollectConnections true
+#      CollectDirectorDNS false
 #      CollectSHM true
 #      CollectESI false
 #      CollectFetch false
 #      CollectHCB false
+#      CollectObjects false
+#      CollectPurge false
+#      CollectSession false
 #      CollectSMA false
 #      CollectSMS false
 #      CollectSM false
+#      CollectStruct false
 #      CollectTotals false
+#      CollectUptime false
+#      CollectVCL false
 #      CollectWorkers false
 #   </Instance>
 #</Plugin>
