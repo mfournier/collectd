@@ -1065,6 +1065,16 @@
 #	</Node>
 #</Plugin>
 
+#<Plugin write_riemann>
+#	<Node "example">
+#		Host "localhost">
+#		Port 5555
+#		StoreRates false
+#		Delay 2
+#	</Node>
+#	Tag "foobar"
+#</Plugin>
+
 ##############################################################################
 # Filter configuration                                                       #
 #----------------------------------------------------------------------------#
