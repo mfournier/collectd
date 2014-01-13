@@ -44,7 +44,7 @@
 #ifdef HAVE_AMQP_SOCKET_H
 # include <amqp_socket.h>
 #endif
-#ifdef HAVE_AMQP_TCP_SOCKET
+#ifdef HAVE_AMQP_TCP_SOCKET_H
 #if defined HAVE_DECL_AMQP_SOCKET_CLOSE && !HAVE_DECL_AMQP_SOCKET_CLOSE
 /* rabbitmq-c does not currently ship amqp_socket.h
  * and, thus, does not define this function. */
@@ -405,7 +405,7 @@ static int camqp_connect (camqp_config_t *conf) /* {{{ */
 {
     amqp_rpc_reply_t reply;
     int status;
-#ifdef HAVE_AMQP_TCP_SOCKET
+#ifdef HAVE_AMQP_TCP_SOCKET_H
     amqp_socket_t *socket;
 #else
     int sockfd;
@@ -421,7 +421,7 @@ static int camqp_connect (camqp_config_t *conf) /* {{{ */
         return (ENOMEM);
     }
 
-#ifdef HAVE_AMQP_TCP_SOCKET
+#ifdef HAVE_AMQP_TCP_SOCKET_H
 # define CLOSE_SOCKET() amqp_socket_close (socket)
     /* TODO: add support for SSL using amqp_ssl_socket_new
      *       and related functions */
@@ -446,7 +446,7 @@ static int camqp_connect (camqp_config_t *conf) /* {{{ */
         conf->connection = NULL;
         return (status);
     }
-#else /* HAVE_AMQP_TCP_SOCKET */
+#else /* HAVE_AMQP_TCP_SOCKET_H */
 # define CLOSE_SOCKET() close(sockfd)
     /* this interface is deprecated as of rabbitmq-c 0.4 */
     sockfd = amqp_open_socket (CONF(conf, host), conf->port);
