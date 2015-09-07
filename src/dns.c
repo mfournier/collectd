@@ -208,55 +208,10 @@ static void dns_child_callback (const rfc1035_header_t *dns)
 	pthread_mutex_unlock (&opcode_mutex);
 }
 
-static int dns_run_pcap_loop (void)
+
+static int dns_run_pcap_loop (pcap_t *pcap_obj)
 {
-	pcap_t *pcap_obj;
-	char    pcap_error[PCAP_ERRBUF_SIZE];
-	struct  bpf_program fp;
-
 	int status;
-
-	/* Don't block any signals */
-	{
-		sigset_t sigmask;
-		sigemptyset (&sigmask);
-		pthread_sigmask (SIG_SETMASK, &sigmask, NULL);
-	}
-
-	/* Passing `pcap_device == NULL' is okay and the same as passign "any" */
-	DEBUG ("dns plugin: Creating PCAP object..");
-	pcap_obj = pcap_open_live ((pcap_device != NULL) ? pcap_device : "any",
-			PCAP_SNAPLEN,
-			0 /* Not promiscuous */,
-			(int) CDTIME_T_TO_MS (plugin_get_interval () / 2),
-			pcap_error);
-	if (pcap_obj == NULL)
-	{
-		ERROR ("dns plugin: Opening interface `%s' "
-				"failed: %s",
-				(pcap_device != NULL) ? pcap_device : "any",
-				pcap_error);
-		return (PCAP_ERROR);
-	}
-
-	memset (&fp, 0, sizeof (fp));
-	status = pcap_compile (pcap_obj, &fp, "udp port 53", 1, 0);
-	if (status < 0)
-	{
-		ERROR ("dns plugin: pcap_compile failed: %s",
-				pcap_statustostr (status));
-		return (status);
-	}
-
-	status = pcap_setfilter (pcap_obj, &fp);
-	if (status < 0)
-	{
-		ERROR ("dns plugin: pcap_setfilter failed: %s",
-				pcap_statustostr (status));
-		return (status);
-	}
-
-	DEBUG ("dns plugin: PCAP object created.");
 
 	dnstop_set_pcap_obj (pcap_obj);
 	dnstop_set_callback (dns_child_callback);
@@ -303,13 +258,14 @@ static int dns_sleep_one_interval (void) /* {{{ */
 	return (status);
 } /* }}} int dns_sleep_one_interval */
 
-static void *dns_child_loop (__attribute__((unused)) void *dummy) /* {{{ */
+static void *dns_child_loop (void *user_data) /* {{{ */
 {
 	int status;
+	pcap_t *pcap_obj = user_data;
 
 	while (42)
 	{
-		status = dns_run_pcap_loop ();
+		status = dns_run_pcap_loop (pcap_obj);
 		if (status != PCAP_ERROR_IFACE_NOT_UP)
 			break;
 
@@ -334,11 +290,58 @@ static int dns_init (void)
 	tr_responses = 0;
 	pthread_mutex_unlock (&traffic_mutex);
 
+	pcap_t *pcap_obj;
+	char    pcap_error[PCAP_ERRBUF_SIZE];
+
+	struct  bpf_program fp;
+
+  /* Don't block any signals */
+	{
+		sigset_t sigmask;
+		sigemptyset (&sigmask);
+		pthread_sigmask (SIG_SETMASK, &sigmask, NULL);
+	}
+
+	/* Passing `pcap_device == NULL' is okay and the same as passign "any" */
+	DEBUG ("dns plugin: Creating PCAP object..");
+	pcap_obj = pcap_open_live ((pcap_device != NULL) ? pcap_device : "any",
+			PCAP_SNAPLEN,
+			0 /* Not promiscuous */,
+			(int) CDTIME_T_TO_MS (plugin_get_interval () / 2),
+			pcap_error);
+	if (pcap_obj == NULL)
+	{
+		ERROR ("dns plugin: Opening interface `%s' "
+				"failed: %s",
+				(pcap_device != NULL) ? pcap_device : "any",
+				pcap_error);
+		return (PCAP_ERROR);
+	}
+
+	memset (&fp, 0, sizeof (fp));
+	status = pcap_compile (pcap_obj, &fp, "udp port 53", 1, 0);
+	if (status < 0)
+	{
+		ERROR ("dns plugin: pcap_compile failed: %s",
+				pcap_statustostr (status));
+		return (status);
+	}
+
+	status = pcap_setfilter (pcap_obj, &fp);
+	if (status < 0)
+	{
+		ERROR ("dns plugin: pcap_setfilter failed: %s",
+				pcap_statustostr (status));
+		return (status);
+	}
+
+	DEBUG ("dns plugin: PCAP object created.");
+
 	if (listen_thread_init != 0)
 		return (-1);
 
 	status = plugin_thread_create (&listen_thread, NULL, dns_child_loop,
-			(void *) 0);
+			pcap_obj);
 	if (status != 0)
 	{
 		char errbuf[1024];
