@@ -1677,6 +1677,7 @@
 
 #<Plugin write_prometheus>
 #	Port "9103"
+#	Label "foo" "bar"
 #</Plugin>
 
 #<Plugin write_redis>
