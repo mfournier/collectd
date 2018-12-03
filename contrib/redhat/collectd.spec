@@ -247,8 +247,8 @@
 
 Summary:	Statistics collection and monitoring daemon
 Name:		collectd
-Version:	5.7.1
-Release:	8%{?dist}
+Version:	5.8.1
+Release:	1%{?dist}
 URL:		https://collectd.org
 Source:		https://collectd.org/files/%{name}-%{version}.tar.bz2
 License:	GPLv2
@@ -1874,6 +1874,8 @@ Collectd utilities
 
 %configure CFLAGS="%{optflags} -DLT_LAZY_OR_NOW=\"RTLD_LAZY|RTLD_GLOBAL\"" \
 	%{?_python_config} \
+	--enable-debug \
+	--with-data-max-name-len=512 \
 	--disable-static \
 	--enable-all-plugins=yes \
 	--enable-match_empty_counter \
@@ -2737,6 +2739,13 @@ fi
 %doc contrib/
 
 %changelog
+* Mon Dec 03 2018 Marc Fournier <marc.fournier@camptocamp.com> - 5.8.1-1
+- Custom build from current 5.8 branch
+- build with debug enabled
+- build with DATA_MAX_NAME_LEN set to 512
+- Added custom patches:
+  * #2712 prometheus labels support
+
 * Thu Sep 28 2017 xakru <calvinxakru@gmail.com> - 5.7.1-8
 - Add new libcollectdclient/network_parse
 - Add new libcollectdclient/server
